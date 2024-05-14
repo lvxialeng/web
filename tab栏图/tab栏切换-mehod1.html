@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tab栏切换</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .tab {
+      width: 590px;
+      height: 340px;
+      margin: 20px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .tab-nav {
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tab-nav h3 {
+      font-size: 24px;
+      font-weight: normal;
+      margin-left: 20px;
+    }
+
+    .tab-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .tab-nav ul li {
+      margin: 0 20px;
+      font-size: 14px;
+    }
+
+    .tab-nav ul li a {
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      color: #333;
+    }
+
+    .tab-nav ul li a.active {
+      border-color: #e1251b;
+      color: #e1251b;
+    }
+
+    .tab-content {
+      padding: 0 16px;
+    }
+
+    .tab-content .item {
+      display: none;
+    }
+
+    .tab-content .item.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tab">
+    <div class="tab-nav">
+      <h3>每日特价</h3>
+      <ul>
+        <li><a class="active" href="javascript:;">精选</a></li>
+        <li><a href="javascript:;">美食</a></li>
+        <li><a href="javascript:;">百货</a></li>
+        <li><a href="javascript:;">个护</a></li>
+        <li><a href="javascript:;">预告</a></li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <div class="item active"><img src="images/tab00.png" alt="" /></div>
+      <div class="item"><img src="images/tab01.png" alt="" /></div>
+      <div class="item"><img src="images/tab02.png" alt="" /></div>
+      <div class="item"><img src="images/tab03.png" alt="" /></div>
+      <div class="item"><img src="images/tab04.png" alt="" /></div>
+    </div>
+  </div>
+  <script>
+    // 获取tab内的li
+    const as = document.querySelectorAll(".tab-nav a")
+    for (let i = 0; i < as.length; i++) {
+      as[i].addEventListener("mouseenter", function () {
+        // console.log('11');
+        // 移除其他li的active类
+        document.querySelector(".tab-nav .active").classList.remove("active")
+        // 给this(当前的li)添加active类
+        this.classList.add("active")
+        // 在内部对其进行再一次排查思想,借助index来改变下面的items
+        document.querySelector(".tab-content .item.active").classList.remove("active")
+        document.querySelector(`.tab-content .item:nth-child(${i + 1})`).classList.add("active")
+      })
+    }
+    // 这个案例是先对a进行一个事件监听mouseenter,而a有很多个所以先获取一个列表的as来获取所有的a,
+    //在对as进行for循环都遍历到内部的每一个a对其进行排查思想enter到另一个a时先除去当前a的active在对enter的加一个active
+    // 这样active的样式是完成了,后在对item进行改变,因为此时index(i)是共享的所以直接运行i+1即可得到第i+1个item,
+    //然后将其添加active类使其可视化(在之前也要选择排查思想).
+  </script>
+</body>
+
+</html>
